@@ -1,9 +1,10 @@
 import pygame
 import sys
+from mobs import TestFairy
+from user_settings import *
 
-#TODO: Make user settings
-SCREEN_WIDTH = 1280
-SCREEN_HEIGHT = 720 
+#TODO: continue user settings
+
 
 def main():
     #Initializing pygame module see: https://www.pygame.org/docs/ref/pygame.html
@@ -17,6 +18,9 @@ def main():
 
     #Helper variables begin:
     fps_time_to_stdout_timer = 0 #Accumulates delta time
+    mobs_on_screen = 0
+
+    fairy_list = []
 
     #https://www.pygame.org/docs/ref/time.html#pygame.time.Clock
     delta_time_clock = pygame.time.Clock()
@@ -31,6 +35,17 @@ def main():
                 pygame.quit()
                 return
             
+        #Fill Screen: https://www.pygame.org/docs/ref/surface.html#pygame.Surface.fill
+        screen.fill((45,45,45))
+
+        if mobs_on_screen <= 100:
+            fairy_list.append(TestFairy())
+            mobs_on_screen += 1
+
+        #Draw the Fairies:
+        for fairy in fairy_list:
+            screen.blit(fairy.image, fairy.rect)
+
         #Refresh Screen: https://www.pygame.org/docs/ref/display.html#pygame.display.flip
         pygame.display.flip()
 
@@ -42,7 +57,8 @@ def main():
         #Simple output to stdout to show game is running.
         fps_time_to_stdout_timer += dt
         if fps_time_to_stdout_timer >=5:
-            print(f"delta_time_clock is: {delta_time_clock} dt is: {dt}")
+            #https://www.pygame.org/docs/ref/time.html?highlight=fps#pygame.time.Clock.get_fps
+            print(f"delta_time_clock is: {delta_time_clock} dt is: {dt} for {delta_time_clock.get_fps()} frames per second")
             #print(f"Rotation: {user_player1.rotation}")  #old irrelevent rotation check
             fps_time_to_stdout_timer = 0
     
