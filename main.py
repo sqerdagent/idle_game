@@ -38,12 +38,15 @@ def main():
         #Fill Screen: https://www.pygame.org/docs/ref/surface.html#pygame.Surface.fill
         screen.fill((45,45,45))
 
+
+        #test code to have some fairies on screen
         if mobs_on_screen <= 100:
             fairy_list.append(TestFairy())
             mobs_on_screen += 1
 
         #Draw the Fairies:
         for fairy in fairy_list:
+            fairy.update(dt)  #Change later for every object.
             screen.blit(fairy.image, fairy.rect)
 
         #Refresh Screen: https://www.pygame.org/docs/ref/display.html#pygame.display.flip
